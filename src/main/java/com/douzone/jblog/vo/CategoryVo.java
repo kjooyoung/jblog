@@ -6,6 +6,7 @@ public class CategoryVo {
 	private String description;
 	private String regDate;
 	private Long userNo;
+	private Integer totalPost;
 	
 	public CategoryVo() {}
 
@@ -47,6 +48,14 @@ public class CategoryVo {
 
 	public void setUserNo(Long userNo) {
 		this.userNo = userNo;
+	}
+	
+	public Integer getTotalPost() {
+		return totalPost;
+	}
+
+	public void setTotalPost(Integer totalPost) {
+		this.totalPost = totalPost;
 	}
 
 	@Override

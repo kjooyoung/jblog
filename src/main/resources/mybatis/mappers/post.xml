@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="post">
+	<insert id="insert" parameterType="postvo">
+		insert into post values(null, #{title}, #{content}, now(), #{categoryNo})
+	</insert>
+	
+	<select id="getList" parameterType="string" resultType="postvo">
+		select no, title, content, reg_date as regDate, category_no as categoryNo  
+		from post where category_no in(select category_no from category where user_no = 
+		(select user_no from user where id = #{id}))
+	</select>
+	
+	<select id="getListttt" parameterType="map" resultType="postvo">
+		select d.no as no, d.title as title, d.content as content, d.reg_date as regDate, d.category_no as categoryNo
+		from user a, blog b, category c, post d
+		where a.no = b.user_no
+		and b.user_no = c.user_no
+		and c.no = d.category_on
+		and a.id = #{id} and d.category_no = #{categoryNo}
+		order by d.reg_date desc
+	</select>
+</mapper>

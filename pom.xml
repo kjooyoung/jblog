@@ -21,12 +21,12 @@
 			<version>${org.springframework-version}</version>
 
 			<!-- JCL 제외 -->
-			<exclusions>
+			<!-- <exclusions>
 				<exclusion>
 					<groupId>commons-logging</groupId>
 					<artifactId>commons-logging</artifactId>
 				</exclusion>
-			</exclusions>
+			</exclusions> --> 
 		</dependency>
 
 		<!-- spring web -->
