@@ -29,4 +29,12 @@ public class CategoryDao {
 	public int insert(CategoryVo categoryVo) {
 		return sqlSession.insert("category.insert", categoryVo);
 	}
+	
+	public int delete(Long no) {
+		return sqlSession.delete("category.delete", no);
+	}
+	
+	public int getCountById(String id) {
+		return sqlSession.selectOne("category.getCountById", id);
+	}
 }

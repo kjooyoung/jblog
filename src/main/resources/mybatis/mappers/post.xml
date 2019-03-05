@@ -3,22 +3,48 @@
 
 <mapper namespace="post">
 	<insert id="insert" parameterType="postvo">
-		insert into post values(null, #{title}, #{content}, now(), #{categoryNo})
+		insert into post values(null,
+		#{title}, #{content}, now(), #{categoryNo})
 	</insert>
-	
-	<select id="getList" parameterType="string" resultType="postvo">
-		select no, title, content, reg_date as regDate, category_no as categoryNo  
-		from post where category_no in(select category_no from category where user_no = 
-		(select user_no from user where id = #{id}))
+
+	<select id="getList" parameterType="map" resultType="postvo">
+		select a.no as no, title, content, date_format(a.reg_date, '%Y-%m-%d') as regDate, category_no
+		as categoryNo
+		from post a, category b where a.category_no = b.no
+		<choose>
+			<when test="categoryNo != null">
+				and b.no = #{categoryNo}
+			</when>
+			<otherwise>
+				and b.no = (select min(a.no) from category a, user b
+				where a.user_no = b.no and b.id = #{id})
+			</otherwise>
+		</choose>
 	</select>
-	
-	<select id="getListttt" parameterType="map" resultType="postvo">
-		select d.no as no, d.title as title, d.content as content, d.reg_date as regDate, d.category_no as categoryNo
-		from user a, blog b, category c, post d
-		where a.no = b.user_no
-		and b.user_no = c.user_no
-		and c.no = d.category_on
-		and a.id = #{id} and d.category_no = #{categoryNo}
-		order by d.reg_date desc
+
+	<select id="get" parameterType="map" resultType="postvo">
+		select a.no as no, title, content, date_format(a.reg_date, '%Y-%m-%d') as regDate, category_no
+		as categoryNo
+		from post a, category b where a.category_no = b.no
+		<choose>
+			<when test="categoryNo != null">
+				and b.no = #{categoryNo}
+				<choose>
+					<when test="postNo != null">
+						and a.no = #{postNo}
+					</when>
+					<otherwise>
+						and a.no = (select min(no) from post where category_no = #{categoryNo})
+					</otherwise>
+				</choose>
+			</when>
+			<otherwise>
+				and b.no = (select min(a.no) from category a, user b
+				where a.user_no = b.no and b.id = #{id})
+				and a.no = (select min(no) from post where category_no = (select min(a.no) from category a, user b
+				where a.user_no = b.no and b.id = #{id}))
+			</otherwise>
+		</choose>
 	</select>
+
 </mapper>

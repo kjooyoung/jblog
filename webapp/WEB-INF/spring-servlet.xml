@@ -19,7 +19,7 @@
 	<mvc:default-servlet-handler />
 	
 	<!-- the mvc resources mapping url(virtual) -->
-	<mvc:resources mapping="/uploads/images/**"
+	<mvc:resources mapping="/assets/images/**"
 		location="file:/uploads/" />
 		
 	<mvc:interceptors>

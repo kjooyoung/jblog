@@ -20,12 +20,14 @@ public class BlogService {
 	@Autowired
 	private CategoryDao categoryDao;
 	
-	public Map<String, Object> getBlog(String id) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("blog", blogDao.getById(id));
-		map.put("postList", postDao.getList(id));
-		map.put("categoryList", categoryDao.getList(id));
-		return map;
+	public Map<String, Object> getBlog(Map<String, Object> paramMap) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("id", (String)paramMap.get("id"));
+		result.put("blog", blogDao.getById((String)paramMap.get("id")));
+		result.put("post", postDao.get(paramMap));
+		result.put("postList", postDao.getList(paramMap));
+		result.put("categoryList", categoryDao.getList((String)paramMap.get("id")));
+		return result;
 	}
 	
 }

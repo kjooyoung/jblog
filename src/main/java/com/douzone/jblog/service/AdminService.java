@@ -25,19 +25,27 @@ public class AdminService {
 		blogDao.update(blogVo);
 	}
 	
-	public BlogVo getBlogInfo(Long no) {
-		return blogDao.getByNo(no);
+	public BlogVo getBlogInfo(String id) {
+		return blogDao.getById(id);
 	}
 	
-	public List<CategoryVo> getListByNo(Long no){
-		return categoryDao.getListByNo(no);
+	public List<CategoryVo> getList(String id){
+		return categoryDao.getList(id);
 	}
 	
-	public void insertCategory(CategoryVo categoryVo) {
+	public int insertCategory(CategoryVo categoryVo, String id) {
 		categoryDao.insert(categoryVo);
+		return categoryDao.getCountById(id);
 	}
 	
 	public void insertPost(PostVo postVo) {
 		postDao.insert(postVo);
+	}
+	
+	public boolean deleteCategory(Long no) {
+		if(categoryDao.delete(no) == 1) {
+			return true;
+		}
+		return false;
 	}
 }

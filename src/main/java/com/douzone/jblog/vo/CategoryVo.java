@@ -6,7 +6,7 @@ public class CategoryVo {
 	private String description;
 	private String regDate;
 	private Long userNo;
-	private Integer totalPost;
+	private Integer totalPost=0;
 	
 	public CategoryVo() {}
 

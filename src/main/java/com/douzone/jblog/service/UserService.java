@@ -27,6 +27,7 @@ public class UserService {
 	
 	public void insert(UserVo userVo) {
 		userDao.insert(userVo);
+		userVo.setName(userVo.getName()+"님의 블로그");
 		blogDao.insert(userVo);
 		categoryDao.insertDefault(userVo);
 	}
