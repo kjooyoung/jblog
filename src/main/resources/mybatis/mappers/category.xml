@@ -32,7 +32,8 @@
 	</delete>
 	
 	<select id="getCountById" parameterType="string" resultType="integer">
-		select count(*) from category 
-		where user_no = (select user_no from user where id = #{id})
+		select count(*) from category a, user b
+		where a.user_no = b.no
+		and b.id = #{id};
 	</select>
 </mapper>

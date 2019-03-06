@@ -16,7 +16,7 @@
 	</insert>
 	
 	<select id="getByIdAndPassword" parameterType="uservo" resultType="uservo">
-		select no, id, name, password, join_date as joinDate
+		select no, id, name, join_date as joinDate
 		from user where id = #{id} and password = #{password}
 	</select>
 	

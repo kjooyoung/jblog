@@ -3,6 +3,7 @@ package com.douzone.jblog.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,10 @@ import com.douzone.jblog.vo.BlogVo;
 import com.douzone.jblog.vo.CategoryVo;
 import com.douzone.jblog.vo.PostVo;
 import com.douzone.jblog.vo.UserVo;
+import com.douzone.security.Auth;
+import com.douzone.security.AuthUser;
 
+@Auth
 @Controller
 @RequestMapping("/{id}/admin")
 public class AdminController {
@@ -33,19 +37,21 @@ public class AdminController {
 	private FileuploadService fileuploadService;
 	
 	@RequestMapping(value=("/basic"), method=RequestMethod.GET)
-	public String adminBasic(@PathVariable("id") String id, Model model) {
+	public String adminBasic(@PathVariable("id") String id, @AuthUser UserVo authUser, Model model) {
+		if(authUser.getId().equals(id) == false) {
+			return "redirect:/";
+		}
 		model.addAttribute("blog", adminService.getBlogInfo(id));
 		return "blog/blog-admin-basic";
 	}
-	
+
 	@RequestMapping(value={"/basic"}, method=RequestMethod.POST)
 	public String adminBasic(@PathVariable("id") String id,
-						@ModelAttribute BlogVo blogVo, HttpSession session, 
-						@RequestParam("logo-file") MultipartFile multipartFile ) {
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(id.equals(authUser.getId()) == false) {
-			//접근제어
-			return "redirect:/"+id;
+						@ModelAttribute BlogVo blogVo,
+						@RequestParam("logo-file") MultipartFile multipartFile,
+						@AuthUser UserVo authUser) {
+		if(!authUser.getId().equals(id)) {
+			return "redirect:/";
 		}
 		
 		blogVo.setUserNo(authUser.getNo());
@@ -56,8 +62,13 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/category", method=RequestMethod.GET)
-	public String adminCategory(@PathVariable("id") String id, Model model) {
+	public String adminCategory(@PathVariable("id") String id, Model model,
+								@AuthUser UserVo authUser) {
+		if(!authUser.getId().equals(id)) {
+			return "redirect:/";
+		}
 		model.addAttribute("id",id);
+		model.addAttribute("blog", adminService.getBlogInfo(id));
 		return "blog/blog-admin-category";
 	}
 	
@@ -89,18 +100,22 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/write", method=RequestMethod.GET)
-	public String write(@PathVariable("id") String id, Model model) {
+	public String write(@PathVariable("id") String id, Model model,
+						@AuthUser UserVo authUser) {
+		if(!authUser.getId().equals(id)) {
+			return "redirect:/";
+		}
 		model.addAttribute("categoryList", adminService.getList(id));
+		model.addAttribute("blog", adminService.getBlogInfo(id));
 		return "blog/blog-admin-write";
 	}
 	
 	@RequestMapping(value="/write", method=RequestMethod.POST)
-	public String write(HttpSession session, @PathVariable("id") String id,
-			@ModelAttribute PostVo postVo) {
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		if(id.equals(authUser.getId()) == false) {
-			//접근제어
-			return "redirect:/"+id;
+	public String write( @PathVariable("id") String id,
+						@ModelAttribute PostVo postVo,
+						@AuthUser UserVo authUser) {
+		if(!authUser.getId().equals(id)) {
+			return "redirect:/";
 		}
 		
 		adminService.insertPost(postVo);

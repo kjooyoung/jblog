@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.douzone.jblog.service.BlogService;
 
 @Controller
-@RequestMapping("/{id:(?!assets).*}")
+@RequestMapping("/{id:(?!assets|up).*}")
 public class BlogController {
 	@Autowired
 	private BlogService blogService;

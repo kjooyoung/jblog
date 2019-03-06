@@ -19,5 +19,6 @@
 				</c:if>
 			</c:otherwise>
 		</c:choose>
+		<li><a href="${pageContext.request.contextPath}">메인화면</a></li>
 	</ul>
 </div>

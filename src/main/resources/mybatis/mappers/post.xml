@@ -8,9 +8,9 @@
 	</insert>
 
 	<select id="getList" parameterType="map" resultType="postvo">
-		select a.no as no, title, content, date_format(a.reg_date, '%Y-%m-%d') as regDate, category_no
+		select a.no as no, title, a.content as content, date_format(a.reg_date, '%Y-%m-%d') as regDate, category_no
 		as categoryNo
-		from post a, category b where a.category_no = b.no
+		from post a, category b where a.category_no = b.no 
 		<choose>
 			<when test="categoryNo != null">
 				and b.no = #{categoryNo}
@@ -23,9 +23,9 @@
 	</select>
 
 	<select id="get" parameterType="map" resultType="postvo">
-		select a.no as no, title, content, date_format(a.reg_date, '%Y-%m-%d') as regDate, category_no
-		as categoryNo
-		from post a, category b where a.category_no = b.no
+		select a.no as no, title, a.content as content, date_format(a.reg_date, '%Y-%m-%d') as regDate, category_no
+		as categoryNo, count(c.no) as totalComment
+		from post a, category b, comment c where a.category_no = b.no and a.no = c.post_no
 		<choose>
 			<when test="categoryNo != null">
 				and b.no = #{categoryNo}

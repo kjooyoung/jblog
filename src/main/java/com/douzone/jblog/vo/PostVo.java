@@ -6,6 +6,7 @@ public class PostVo {
 	private String content;
 	private String regDate;
 	private Long categoryNo;
+	private Long totalComment;
 	
 	public PostVo() {}
 
@@ -47,6 +48,14 @@ public class PostVo {
 
 	public void setCategoryNo(Long categoryNo) {
 		this.categoryNo = categoryNo;
+	}
+
+	public Long getTotalComment() {
+		return totalComment;
+	}
+
+	public void setTotalComment(Long totalComment) {
+		this.totalComment = totalComment;
 	}
 
 	@Override

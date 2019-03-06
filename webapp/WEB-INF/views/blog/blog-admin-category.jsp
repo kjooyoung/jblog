@@ -20,7 +20,7 @@ var insert = function(){
 			"description" : $("#input-desc").val(),
 		},
 		success: function(response){
-			console.log(response);
+			console.log(response.data.length);
 			render(response.data.length, response.data.vo);
 			$("#input-name").val("");
 			$("#input-desc").val("");
@@ -49,7 +49,7 @@ var getList = function(){
 }
 
 var render = function(index, vo){
-	var htmls = '<tr data-no="'+vo.no+'"><td>'+index+'</td><td>'+vo.name+'</td>'+
+	var htmls = '<tr data-no="'+vo.no+'"><td class="index">'+index+'</td><td>'+vo.name+'</td>'+
 				'<td>'+vo.totalPost+'</td><td>'+vo.description+'</td>'+
 				'<td><a data-no="'+vo.no+'" href="">'+
 				'<img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></a></tr>';
@@ -83,8 +83,20 @@ $(function(){
 	// live event (미래에 동적으로 생성될 엘리먼트의 이벤트)
 	$(document).on("click", ".admin-cat tr a", function(event){
 		event.preventDefault();
-		deleteCat($(this).data("no"));
+		var totalCat = ($(".admin-cat tr").length)-1;
+		var deleteNo = $(this).data("no");
+		var curIndex = $("tr[data-no='"+deleteNo+"'] .index").text()
+
+		$(".index").each(function(){
+			if($(this).text() > curIndex){
+				$(this).text(($(this).text())-1);
+			}
+		});
+		
+		deleteCat(deleteNo);
+		
 	});
+	
 });
 </script>
 </head>

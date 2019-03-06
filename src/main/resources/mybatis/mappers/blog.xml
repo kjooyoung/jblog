@@ -3,12 +3,12 @@
 
 <mapper namespace="blog">
 	<insert id="insert" parameterType="uservo">
-		insert into blog values(#{no}, (select name from user where no = #{no}), 'spring-logo.jpg' )
+		insert into blog values(#{no}, #{name}, 'spring-logo.jpg' )
 	</insert>
 	
 	<select id="getById" parameterType="string" resultType="blogvo">
-		select user_no as userNo, title, logo from blog 
-		where user_no = (select user_no from user where id = #{id})
+		select user_no as userNo, title, logo from blog a, user b
+		where a.user_no = b.no and b.id = #{id}
 	</select>
 	
 	<select id="getByNo" parameterType="string" resultType="blogvo">
