@@ -9,7 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>JBlog</title>
 <Link rel="stylesheet"
-	href="${pageContext.request.contextPath}/assets/css/jblog.css?ver=3">
+	href="${pageContext.request.contextPath}/assets/css/jblog.css?ver=4">
 <script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.9.0.js"></script>
 <script type="text/javascript">
 var render = function(vo, mode){
@@ -157,7 +157,7 @@ $(function(){
 		<div id="wrapper">
 			<div id="content">
 				<c:choose>
-					<c:when test="${post ne null }">
+					<c:when test="${post.no ne null}">
 						<div class="blog-content">
 							<h4>${post.title }</h4>
 							<p>${post.content }

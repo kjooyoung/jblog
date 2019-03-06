@@ -50,7 +50,7 @@ div#container				{ width:920px; margin:0 auto }
 div#header					{ height:120px; background: #5394CC;  }
 div#content					{ float:left; width:720px; min-height:220px }
 div#content.full-screen		{ float:none; width:920px;}
-div#navigation				{ float:right; width:200px }
+div#navigation				{ float:right; width:200px;}
 div#extra					{ float:right; clear:right; width:200px }
 div#footer					{ clear:both; width:100% }
 
@@ -146,7 +146,7 @@ div#content .admin-cat					{ border:none; width:720px; margin-top:30px }
 .admin-cat-write td.s					{ padding:10px 0; text-align:center }
 
 /* navigator */
-div#navigation							{ background-color:#F9F9F9 }
+div#navigation							{ background-color:#F9F9F9; }
 div#navigation h2, div#navigation ul	{ margin-left:10px }
 div#navigation h2						{ font-size:1.0em }
 div#navigation ul						{ margin-top:5px; margin-bottom:10px }

@@ -24,6 +24,7 @@ public class BlogService {
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("id", (String)paramMap.get("id"));
 		result.put("blog", blogDao.getById((String)paramMap.get("id")));
+		System.out.println(postDao.get(paramMap));
 		result.put("post", postDao.get(paramMap));
 		result.put("postList", postDao.getList(paramMap));
 		result.put("categoryList", categoryDao.getList((String)paramMap.get("id")));
